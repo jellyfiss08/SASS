@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Financial Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 0;
+      margin: 0;
+      background-color: #f0f2f5;
+    }
+    .logo {
+      text-align: center;
+      background-color: #4caf50;
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .container h2 {
+      text-align: center;
+      color: #333;
+    }
+    .input-group {
+      margin: 15px 0;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .link {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: #4caf50;
+      cursor: pointer;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="logo">💰 AI Financial Assistant</div>
+
+  <!-- Main Landing Page -->
+  <div class="container" id="mainPage">
+    <h2>Welcome</h2>
+    <button onclick="showLogin()">Login</button>
+    <button onclick="showSignup()">Sign Up</button>
+  </div>
+
+  <!-- Login Page -->
+  <div class="container hidden" id="loginPage">
+    <h2>Login</h2>
+    <div class="input-group">
+      <input type="email" id="loginEmail" placeholder="Email">
+    </div>
+    <div class="input-group">
+      <input type="password" id="loginPassword" placeholder="Password">
+    </div>
+    <button onclick="loginUser()">Login</button>
+    <div class="link" onclick="showForgotPassword()">Forgot Password?</div>
+    <div class="link" onclick="goHome()">⬅ Back</div>
+  </div>
+
+  <!-- Sign Up Page -->
+  <div class="container hidden" id="signupPage">
+    <h2>Sign Up</h2>
+    <div class="input-group">
+      <input type="email" id="signupEmail" placeholder="Email">
+    </div>
+    <div class="input-group">
+      <input type="password" id="signupPassword" placeholder="Password">
+    </div>
+    <button onclick="signupUser()">Sign Up</button>
+    <div class="link" onclick="goHome()">⬅ Back</div>
+  </div>
+
+  <!-- Forgot Password Page -->
+  <div class="container hidden" id="forgotPage">
+    <h2>Reset Password</h2>
+    <div class="input-group">
+      <input type="email" id="resetEmail" placeholder="Enter your email">
+    </div>
+    <button onclick="sendOTP()">Send OTP</button>
+    <div class="link" onclick="goHome()">⬅ Back</div>
+  </div>
+
+  <!-- OTP Verification -->
+  <div class="container hidden" id="otpPage">
+    <h2>Verify OTP</h2>
+    <div class="input-group">
+      <input type="text" id="otpInput" placeholder="Enter OTP">
+    </div>
+    <div class="input-group">
+      <input type="password" id="newPassword" placeholder="New Password">
+    </div>
+    <div class="input-group">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password">
+    </div>
+    <button onclick="resetPassword()">Reset Password</button>
+    <div class="link" onclick="goHome()">⬅ Back</div>
+  </div>
+
+  <script>
+    function showLogin() {
+      hideAll();
+      document.getElementById('loginPage').classList.remove('hidden');
+    }
+    function showSignup() {
+      hideAll();
+      document.getElementById('signupPage').classList.remove('hidden');
+    }
+    function showForgotPassword() {
+      hideAll();
+      document.getElementById('forgotPage').classList.remove('hidden');
+    }
+    function goHome() {
+      hideAll();
+      document.getElementById('mainPage').classList.remove('hidden');
+    }
+    function hideAll() {
+      document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+    }
+
+    function loginUser() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      alert(`Logged in with ${email}`);
+      // Redirect to dashboard here
+    }
+
+    function signupUser() {
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      alert(`Account created for ${email}`);
+    }
+
+    let generatedOTP = "";
+
+    function sendOTP() {
+      const email = document.getElementById('resetEmail').value;
+      generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      alert(`OTP sent to ${email}: ${generatedOTP}`); // simulate sending email
+      hideAll();
+      document.getElementById('otpPage').classList.remove('hidden');
+    }
+
+    function resetPassword() {
+      const otp = document.getElementById('otpInput').value;
+      const pass1 = document.getElementById('newPassword').value;
+      const pass2 = document.getElementById('confirmPassword').value;
+
+      if (otp !== generatedOTP) return alert("Invalid OTP!");
+      if (pass1 !== pass2) return alert("Passwords do not match!");
+
+      alert("Password reset successful!");
+      goHome();
+    }
+  </script>
+</body>
+</html>
